@@ -3,11 +3,11 @@
 ## Estrutura de Pastas
 
 /src
-  ├── /components        # Componentes reutilizáveis
-  ├── /interfaces        # Interfaces TypeScript
-  ├── /pages             # Páginas da aplicação
-  ├── App.tsx            # Componente principal da aplicação
-  ├── main.tsx          # Ponto de entrada da aplicação
+  ├── /components        # Componentes reutilizáveis <br/>
+  ├── /interfaces        # Interfaces TypeScript <br/>
+  ├── /pages             # Páginas da aplicação <br/>
+  ├── App.tsx            # Componente principal da aplicação <br/>
+  ├── main.tsx          # Ponto de entrada da aplicação <br/>
 
 ## Tecnologias e Funcionalidades usadas
 
