@@ -1,65 +1,17 @@
-import { useState } from 'react';
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
-import { UserList } from '../components/UserList';
-import { ModalForm } from '../components/ModalForm';
-import { IUser } from '../interfaces/UserInterface.tsx';
-import axios from 'axios';
-
-const queryClient = new QueryClient();
-
-const fetchUsersApi = async (): Promise<IUser[]> => {
-  const response = await axios.get('https://66ed7999380821644cdcfa8c.mockapi.io/api/users');
-  return response.data;
-};
-
-//Página principal
-
-function App() {
-  const [openModal, setOpenModal] = useState(false);
-
-  const handleOpen = () => {
-    setOpenModal(true);
-  };
-
-  const handleClose = () => {
-    setOpenModal(false);
-  };
-
-  const { data: users = [], error, isLoading, refetch } = useQuery<IUser[], Error>({
-    queryKey: ['users'],
-    queryFn: fetchUsersApi,
-  });
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
-  return (
-    <div className="App w-full h-screen bg-gray-200">
-      <h1 className='text-center font-bold  text-2xl md:text-4xl pt-10'>
-        Consulta e Cadastro de <span className='text-amber-500'>Usuários</span> vindos da <span className='text-amber-500'>API</span>
-      </h1>
-      
-      <UserList users={users} />
-      
-      <div className='w-full flex justify-center my-10'>
-        <button onClick={handleOpen} className='bg-amber-500 p-4 text-white font-bold rounded-lg hover:bg-amber-600'>
-          Abrir Cadastro
-        </button>
+function Home () {
+  return(
+      <div className="min-h-screen bg-gray-200/90 flex items-center justify-center gap-2">
+          <div className="flex flex-col items-center">
+              <div className="flex gap-x-2 mb-16">
+              <h2 className="text-xl font-bold">BEM-VINDO AO TESTE PARA A EMPRESA MS1 SISTEMAS</h2>
+              <img src="/icon/icon.webp" width="24px"/>
+              </div>
+              <button className="px-4 py-2 border-2 border-amber-500 hover:bg-amber-500 text-amber-500 hover:text-black rounded-xl text-xl font-bold"><a href="/Home">Ir ao Projeto</a></button>
+          </div>
+          <div className="absolute bottom-0">
+            <h2 className="font-bold">Desenvolvidor por: <a className="text-amber-500 hover:text-amber-600 cursor-pointer" href="https://github.com/VitoorVictor/">Vitor Victor</a></h2>
+          </div>
       </div>
-      
-      {openModal && (
-        <ModalForm onClose={handleClose} onUserAdded={refetch} />
-      )}
-    </div>
-  );
+  )
 }
-
-function WrappedApp() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <App />
-    </QueryClientProvider>
-  );
-}
-
-export default WrappedApp;
+export default Home;

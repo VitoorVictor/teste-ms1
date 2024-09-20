@@ -1,7 +1,9 @@
 import { Box, Typography, Button, TextField } from '@mui/material';
+import { useEffect } from 'react';
 import axios from 'axios';
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { IUser } from '../interfaces/UserInterface';
 
 const style = {
   position: 'absolute',
@@ -24,22 +26,40 @@ interface IFormInput {
 interface IModalFormProps {
   onClose: () => void;
   onUserAdded: () => void; 
+  user: IUser | null;
 }
 
 //Modal para Criar Novo Usuário
-export const ModalForm: React.FC<IModalFormProps> = ({ onClose, onUserAdded }) => {
-  const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+export const ModalForm: React.FC<IModalFormProps> = ({ onClose, onUserAdded, user }) => {
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<IFormInput>();
+
+  useEffect(() => {
+    if (user) {
+      setValue('name', user.name);
+      setValue('email', user.email);
+      setValue('city', user.city);
+    }
+  }, [user, setValue]);
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
-      const response = await axios.post('https://66ed7999380821644cdcfa8c.mockapi.io/api/users', data);
-      console.log('Usuário cadastrado com sucesso:', response.data);
-      onUserAdded(); 
-      onClose(); 
-    } catch (error) {
-      console.error('Erro ao cadastrar usuário:', error);
-    }
-  };
+        if (user) {
+          // Edição do usuário existente
+          const response = await axios.put(`https://66ed7999380821644cdcfa8c.mockapi.io/api/users/${user.id}`, data);
+          console.log('Usuário editado com sucesso:', response.data);
+        } else {
+          // Cadastro de novo usuário
+          const response = await axios.post('https://66ed7999380821644cdcfa8c.mockapi.io/api/users', data);
+          console.log('Usuário cadastrado com sucesso:', response.data);
+        }
+        onUserAdded(); 
+        onClose(); 
+      } catch (error) {
+        if (user) {
+        console.error('Erro ao editar usuário:', error);
+      } else { console.error('Erro ao cadastrar usuário:', error); }
+    };
+ }
 
   return (
     <Box sx={style}>
@@ -88,7 +108,7 @@ export const ModalForm: React.FC<IModalFormProps> = ({ onClose, onUserAdded }) =
           helperText={errors.city ? errors.city.message : ''}
         />
         <Button type="submit" variant="contained" color="warning" sx={{ mt: 2 }}>
-          Cadastrar
+            {user ? 'Salvar Alterações' : 'Cadastrar'}
         </Button>
       </form>
     </Box>
