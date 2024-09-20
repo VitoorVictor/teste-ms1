@@ -23,7 +23,7 @@ function App() {
     setOpenModal(false);
   };
 
-  const { data: users = [], error, isLoading } = useQuery<IUser[], Error>({
+  const { data: users = [], error, isLoading, refetch } = useQuery<IUser[], Error>({
     queryKey: ['users'],
     queryFn: fetchUsersApi,
   });
@@ -46,7 +46,7 @@ function App() {
       </div>
       
       {openModal && (
-        <ModalForm onClose={handleClose} />
+        <ModalForm onClose={handleClose} onUserAdded={refetch} />
       )}
     </div>
   );
