@@ -1,4 +1,5 @@
 import { Box, Typography, Button, TextField } from '@mui/material';
+import axios from 'axios';
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 const style = {
@@ -21,14 +22,23 @@ interface IFormInput {
 
 interface IModalFormProps {
     onClose: () => void;
+    onUserAdded: () => void;
   }
 
-export const ModalForm:React.FC<IModalFormProps> = ({onClose}) => {
+export const ModalForm:React.FC<IModalFormProps> = ({onClose, onUserAdded}) => {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
 
-  const onSubmit: SubmitHandler<IFormInput> = data => {
-    console.log(data);
-    // Aqui você pode realizar a lógica de envio dos dados
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    try {
+        const response = await axios.post('https://jsonplaceholder.typicode.com/users', data);
+        console.log('Usuário cadastrado com sucesso:', response.data);
+        onUserAdded();
+        onClose();
+
+      } catch (error) {
+        console.error('Erro ao cadastrar usuário:', error);
+        
+      }
   };
 
   return (
