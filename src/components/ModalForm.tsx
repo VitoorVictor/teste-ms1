@@ -17,28 +17,24 @@ const style = {
 interface IFormInput {
   name: string;
   email: string;
-  password: string;
+  city: string;
 }
 
 interface IModalFormProps {
     onClose: () => void;
-    onUserAdded: () => void;
   }
 
-export const ModalForm:React.FC<IModalFormProps> = ({onClose, onUserAdded}) => {
+export const ModalForm:React.FC<IModalFormProps> = ({onClose}) => {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
-        const response = await axios.post('https://jsonplaceholder.typicode.com/users', data);
+        const response = await axios.post('https://66ed7999380821644cdcfa8c.mockapi.io/api/users', data); 
         console.log('Usuário cadastrado com sucesso:', response.data);
-        onUserAdded();
-        onClose();
-
-      } catch (error) {
+        onClose(); // Fechar o modal após o cadastro
+    } catch (error) {
         console.error('Erro ao cadastrar usuário:', error);
-        
-      }
+    }
   };
 
   return (
@@ -81,13 +77,12 @@ export const ModalForm:React.FC<IModalFormProps> = ({onClose, onUserAdded}) => {
           helperText={errors.email ? errors.email.message : ''}
         />
         <TextField 
-          label="Senha"
-          type="password"
+          label="Cidade"
           fullWidth
           margin="normal"
-          {...register('password', { required: 'Senha é obrigatória' })}
-          error={!!errors.password}
-          helperText={errors.password ? errors.password.message : ''}
+          {...register('city', { required: 'Cidade é obrigatória' })}
+          error={!!errors.city}
+          helperText={errors.city ? errors.city.message : ''}
         />
         
         <Button type="submit" variant="contained" color="warning" sx={{ mt: 2 }}>

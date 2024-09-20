@@ -1,15 +1,19 @@
-import { useEffect, useState } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useState } from 'react';
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { UserList } from '../components/UserList';
 import { ModalForm } from '../components/ModalForm';
-import { IUser } from '../interfaces/UserInterface.tsx'
+import { IUser } from '../interfaces/UserInterface.tsx';
 import axios from 'axios';
 
 const queryClient = new QueryClient();
 
+const fetchUsersApi = async (): Promise<IUser[]> => {
+  const response = await axios.get('https://66ed7999380821644cdcfa8c.mockapi.io/api/users');
+  return response.data;
+};
+
 function App() {
   const [openModal, setOpenModal] = useState(false);
-  const [users, setUsers] = useState<IUser[]>([]); // Adicione estado para usuários
 
   const handleOpen = () => {
     setOpenModal(true);
@@ -19,38 +23,41 @@ function App() {
     setOpenModal(false);
   };
 
-  // Função para buscar usuários
-  const fetchUsersApi = async () => {
-    const response = await axios.get('https://jsonplaceholder.typicode.com/users');
-    setUsers(response.data);
-  };
+  const { data: users = [], error, isLoading } = useQuery<IUser[], Error>({
+    queryKey: ['users'],
+    queryFn: fetchUsersApi,
+  });
 
-  // UseEffect para buscar usuários ao montar
-  useEffect(() => {
-    fetchUsersApi();
-  }, []);
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="App w-full">
-        <h1 className='text-center font-bold text-4xl'>
-          Consulta e Cadastro de <span className='text-amber-500'>Usuários</span> vindos da <span className='text-amber-500'>API</span>
-        </h1>
-        
-        <UserList users={users} /> {/* Passe a lista de usuários para UserList */}
-        
-        <div className='w-full flex justify-center my-10'>
-          <button onClick={handleOpen} className='bg-amber-500 p-4 text-white font-bold rounded-lg hover:bg-amber-600'>
-            Abrir Cadastro
-          </button>
-        </div>
-        
-        {openModal && (
-          <ModalForm onClose={handleClose} onUserAdded={fetchUsersApi} />
-        )}
+    <div className="App w-full h-screen bg-gray-200">
+      <h1 className='text-center font-bold text-4xl pt-10'>
+        Consulta e Cadastro de <span className='text-amber-500'>Usuários</span> vindos da <span className='text-amber-500'>API</span>
+      </h1>
+      
+      <UserList users={users} />
+      
+      <div className='w-full flex justify-center my-10'>
+        <button onClick={handleOpen} className='bg-amber-500 p-4 text-white font-bold rounded-lg hover:bg-amber-600'>
+          Abrir Cadastro
+        </button>
       </div>
+      
+      {openModal && (
+        <ModalForm onClose={handleClose} />
+      )}
+    </div>
+  );
+}
+
+function WrappedApp() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <App />
     </QueryClientProvider>
   );
 }
 
-export default App;
+export default WrappedApp;
