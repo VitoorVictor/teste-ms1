@@ -2,7 +2,7 @@
 
 ## Estrutura de Pastas
 
-/src
+/src <br/>
   ├── /components        # Componentes reutilizáveis <br/>
   ├── /interfaces        # Interfaces TypeScript <br/>
   ├── /pages             # Páginas da aplicação <br/>
