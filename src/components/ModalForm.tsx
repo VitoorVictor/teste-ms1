@@ -1,0 +1,89 @@
+import { Box, Typography, Button, TextField } from '@mui/material';
+import React from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
+interface IFormInput {
+  name: string;
+  email: string;
+  password: string;
+}
+
+interface IModalFormProps {
+    onClose: () => void;
+  }
+
+export const ModalForm:React.FC<IModalFormProps> = ({onClose}) => {
+  const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+
+  const onSubmit: SubmitHandler<IFormInput> = data => {
+    console.log(data);
+    // Aqui você pode realizar a lógica de envio dos dados
+  };
+
+  return (
+    <Box sx={style}>
+      <Typography id="modal-modal-title" variant="h6" component="h2">
+        <div className='flex justify-between'>
+            <h2>Cadastro de usuário</h2>
+            <button onClick={onClose} className='hover:bg-gray-200 px-2 py-1'>
+                <svg fill="#000000" height="14px" width="14px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 460.775 460.775">
+                    <path d="M285.08,230.397L456.218,59.27c6.076-6.077,6.076-15.911,0-21.986L423.511,4.565c-2.913-2.911-6.866-4.55-10.992-4.55
+                    c-4.127,0-8.08,1.639-10.993,4.55l-171.138,171.14L59.25,4.565c-2.913-2.911-6.866-4.55-10.993-4.55
+                    c-4.126,0-8.08,1.639-10.992,4.55L4.558,37.284c-6.077,6.075-6.077,15.909,0,21.986l171.138,171.128L4.575,401.505
+                    c-6.074,6.077-6.074,15.911,0,21.986l32.709,32.719c2.911,2.911,6.865,4.55,10.992,4.55c4.127,0,8.08-1.639,10.994-4.55
+                    l171.117-171.12l171.118,171.12c2.913,2.911,6.866,4.55,10.993,4.55c4.128,0,8.081-1.639,10.992-4.55l32.709-32.719
+                    c6.074-6.075,6.074-15.909,0-21.986L285.08,230.397z"/>
+                </svg>
+            </button>
+        </div>
+      </Typography>
+      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+        Preencha os dados para se cadastrar.
+      </Typography>
+      
+      <form onSubmit={handleSubmit(onSubmit)} style={{ marginTop: '16px' }}>
+        <TextField 
+          label="Nome"
+          fullWidth
+          margin="normal"
+          {...register('name', { required: 'Nome é obrigatório' })}
+          error={!!errors.name}
+          helperText={errors.name ? errors.name.message : ''}
+        />
+        <TextField 
+          label="Email"
+          fullWidth
+          margin="normal"
+          {...register('email', { required: 'Email é obrigatório' })}
+          error={!!errors.email}
+          helperText={errors.email ? errors.email.message : ''}
+        />
+        <TextField 
+          label="Senha"
+          type="password"
+          fullWidth
+          margin="normal"
+          {...register('password', { required: 'Senha é obrigatória' })}
+          error={!!errors.password}
+          helperText={errors.password ? errors.password.message : ''}
+        />
+        
+        <Button type="submit" variant="contained" color="warning" sx={{ mt: 2 }}>
+          Cadastrar
+        </Button>
+      </form>
+    </Box>
+  );
+};
