@@ -1,50 +1,45 @@
-# React + TypeScript + Vite
+# Teste realizado para MS1 Sistemas com React + TypeScript + Vite + Api
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Estrutura de Pastas
 
-Currently, two official plugins are available:
+/src <br/>
+  ├── /components        # Componentes reutilizáveis <br/>
+  ├── /interfaces        # Interfaces TypeScript <br/>
+  ├── /pages             # Páginas da aplicação <br/>
+  ├── App.tsx            # Componente principal da aplicação <br/>
+  ├── main.tsx          # Ponto de entrada da aplicação <br/>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tecnologias e Funcionalidades usadas
 
-## Expanding the ESLint configuration
+- React: Biblioteca para construção de interfaces de usuário.
+- TypeScript: Superset do JavaScript que adiciona tipagem estática.
+- Vite: Ferramenta de build que proporciona um ambiente de desenvolvimento rápido.
+- React Query: Biblioteca para gerenciamento de estados e requisições assíncronas.
+- React Hook Form: Biblioteca para inputs na construção de forms.
+- Axios: Biblioteca para fazer requisições HTTP.
+- Material-UI: Biblioteca de componentes React para interfaces de usuário.
+- Tailwind CSS: Framework CSS utilitário para estilização rápida e responsiva.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Api Usada
 
-- Configure the top-level `parserOptions` property like this:
+MockAPI: [https://mockapi.io](https://mockapi.io/projects)
+A API permite criar, ler usuários. Os campos esperados são:
+- name: Nome do usuário
+- email: Email do usuário
+- city: Cidade do usuário
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Como rodar o Projeto
+Clone o projeto
+- git clone <URL_DO_REPOSITORIO>
+- cd <NOME_DA_PASTA>
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Instale as dependências:
+- npm install
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Inicie o servidor de desenvolvimento:
+- npm run dev
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Acesse a aplicação:
+-Abra o navegador e vá para http://localhost:5173
+
+
