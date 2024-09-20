@@ -21,7 +21,7 @@ function App() {
 
   // Função para buscar usuários
   const fetchUsersApi = async () => {
-    const response = await axios.get('https://66ed7999380821644cdcfa8c.mockapi.io/api/users');
+    const response = await axios.get('https://jsonplaceholder.typicode.com/users');
     setUsers(response.data);
   };
 
