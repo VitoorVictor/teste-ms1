@@ -12,6 +12,8 @@ const fetchUsersApi = async (): Promise<IUser[]> => {
   return response.data;
 };
 
+//Página principal
+
 function App() {
   const [openModal, setOpenModal] = useState(false);
 
@@ -33,7 +35,7 @@ function App() {
 
   return (
     <div className="App w-full h-screen bg-gray-200">
-      <h1 className='text-center font-bold text-4xl pt-10'>
+      <h1 className='text-center font-bold  text-2xl md:text-4xl pt-10'>
         Consulta e Cadastro de <span className='text-amber-500'>Usuários</span> vindos da <span className='text-amber-500'>API</span>
       </h1>
       
