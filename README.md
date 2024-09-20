@@ -16,6 +16,7 @@
 - Vite: Ferramenta de build que proporciona um ambiente de desenvolvimento rápido.
 - React Query: Biblioteca para gerenciamento de estados e requisições assíncronas.
 - React Hook Form: Biblioteca para inputs na construção de forms.
+- React Router Dom: Biblioteca para gerenciar rotas.
 - Axios: Biblioteca para fazer requisições HTTP.
 - Material-UI: Biblioteca de componentes React para interfaces de usuário.
 - Tailwind CSS: Framework CSS utilitário para estilização rápida e responsiva.
@@ -23,7 +24,7 @@
 ## Api Usada
 
 MockAPI: [https://mockapi.io](https://mockapi.io/projects)
-A API permite criar, ler usuários. Os campos esperados são:
+A API permite criar, editar e ler usuários. Os campos esperados são:
 - name: Nome do usuário
 - email: Email do usuário
 - city: Cidade do usuário
